@@ -52,28 +52,28 @@ if os.path.exists(path_to_update_flag):
     try:
         print(Fore.CYAN + "Thank you for using:" + Fore.GREEN + "https://github.com/Gerschel/sd_web_ui_preset_utils/")
         print(Fore.RED +"""
-______                   _    ___  ___                                  
-| ___ \                 | |   |  \/  |                                  
-| |_/ / __ ___  ___  ___| |_  | .  . | __ _ _ __   __ _  __ _  ___ _ __ 
+______                   _    ___  ___
+| ___ \                 | |   |  \/  |
+| |_/ / __ ___  ___  ___| |_  | .  . | __ _ _ __   __ _  __ _  ___ _ __
 |  __/ '__/ _ \/ __|/ _ \ __| | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
-| |  | | |  __/\__ \  __/ |_  | |  | | (_| | | | | (_| | (_| |  __/ |   
-\_|  |_|  \___||___/\___|\__| \_|  |_/\__,_|_| |_|\__,_|\__, |\___|_|   
-                                                         __/ |          
-                                                        |___/           
+| |  | | |  __/\__ \  __/ |_  | |  | | (_| | | | | (_| | (_| |  __/ |
+\_|  |_|  \___||___/\___|\__| \_|  |_/\__,_|_| |_|\__,_|\__, |\___|_|
+                                                         __/ |
+                                                        |___/
 """)
         print(Fore.YELLOW + "By: Gerschel Payne")
         print(Style.RESET_ALL + "Preset Manager: Checking for pre-existing configuration files.")
     except NameError:
         print( "Thank you for using: https://github.com/Gerschel/sd_web_ui_preset_utils/")
         print("""
-______                   _    ___  ___                                  
-| ___ \                 | |   |  \/  |                                  
-| |_/ / __ ___  ___  ___| |_  | .  . | __ _ _ __   __ _  __ _  ___ _ __ 
+______                   _    ___  ___
+| ___ \                 | |   |  \/  |
+| |_/ / __ ___  ___  ___| |_  | .  . | __ _ _ __   __ _  __ _  ___ _ __
 |  __/ '__/ _ \/ __|/ _ \ __| | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
-| |  | | |  __/\__ \  __/ |_  | |  | | (_| | | | | (_| | (_| |  __/ |   
-\_|  |_|  \___||___/\___|\__| \_|  |_/\__,_|_| |_|\__,_|\__, |\___|_|   
-                                                         __/ |          
-                                                        |___/           
+| |  | | |  __/\__ \  __/ |_  | |  | | (_| | | | | (_| | (_| |  __/ |
+\_|  |_|  \___||___/\___|\__| \_|  |_/\__,_|_| |_|\__,_|\__, |\___|_|
+                                                         __/ |
+                                                        |___/
 """)
         print("By: Gerschel Payne")
         print("Preset Manager: Checking for pre-existing configuration files.")
@@ -86,7 +86,7 @@ ______                   _    ___  ___
         print(f"Created: {additional_config_target}")
     else:
         print(f"Not writing {additional_config_target}: config exists already")
-                    
+
     source_path = os.path.join(file_path, presets_config_source)
     target_path = os.path.join(file_path, presets_config_target)
     if not os.path.exists(target_path):
@@ -94,8 +94,8 @@ ______                   _    ___  ___
         print(f"Created: {presets_config_target}")
     else:
         print(f"Not writing {presets_config_target}: config exists already")
-                    
-                    
+
+
     os.remove(path_to_update_flag)
 
 
@@ -117,24 +117,24 @@ class PresetManager(scripts.Script):
             "Sampling Steps": "Sampling steps",
             "Hires. steps": "Hires steps"
             }
-        
+
         if repo == "vlads":
             component_remap.update({
                 "Hires. fix" : "Hires fix"
             })
 
-        
+
         config = self.get_config(self.settings_file)
         for preset in config.values():
             for old_val, new_val in component_remap.items():
                 self.update_component_name(preset, old_val, new_val)
-                    
+
         #PresetManager.all_presets = config
         self.save_config(self.settings_file, config)
 
 
     def __init__(self, *args, **kwargs):
-        
+
         self.compinfo = namedtuple("CompInfo", ["component", "label", "elem_id", "kwargs"])
 
         #self.settings_file = "preset_configuration.json"
@@ -188,13 +188,13 @@ class PresetManager(scripts.Script):
             "Inpaint area",
             "Only masked padding, pixels",
         ]
-        
+
         if is_update_available:
             self.update_config()
 
         # components that pass through after_components
         self.all_components = []
- 
+
         # Read saved settings
         PresetManager.all_presets = self.get_config(self.settings_file)
 
@@ -208,7 +208,7 @@ class PresetManager(scripts.Script):
         self.available_components = self.available_components + self.additional_components
 
 
-    
+
     def fakeinit(self, *args, **kwargs):
         """
         __init__ workaround, since some data is not available during instantiation, such as is_img2img, filename, etc.
@@ -392,7 +392,7 @@ class PresetManager(scripts.Script):
             #!Hack to remove conflict between main Prompt and hr Prompt
             if self.component_map[label] is None:
                 self.component_map.update({component.label: component})
-        
+
 
         if ele == "txt2img_generation_info_button" or ele == "img2img_generation_info_button":
             self._before_component("")
@@ -406,7 +406,7 @@ class PresetManager(scripts.Script):
 
     def _ui(self):
 
-        
+
         # Conditional for class members
         if self.is_txt2img:
             # Quick Set Tab
@@ -496,7 +496,7 @@ class PresetManager(scripts.Script):
         self.inspect_dd.choices = [str(x) for x in self.all_components]
         return [gr.update(choices=[str(x) for x in self.all_components]), gr.Button.update(visible=False)]
 
-    
+
     def inspection_formatter(self, x):
         comp = self.all_components[x]
         text = f"Component Label: {comp.label}\nElement ID: {comp.elem_id}\nComponent: {comp.component}\nAll Info Handed Down: {comp.kwargs}"
@@ -543,13 +543,13 @@ Length: {len(self.available_components)}\t keys: {self.available_components}")
 
             file = os.path.join(PresetManager.BASEDIR, path)
             PresetManager.all_presets.update({setting_name : new_setting})
-            
+
             with open(file, "w") as f:
                 json.dump(PresetManager.all_presets, f, indent=4)
             #TODO: test [] + [] * 4
             return [gr.update(value=""), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys()))]
         return func
-        
+
 
     def save_detailed_config(self, path):
         """
@@ -598,7 +598,7 @@ Length: {len(self.available_components)}\t keys: {self.available_components}")
             #return [gr.update(value=""), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys()))]
             return [gr.update(value=""), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys())), gr.update(choices = list(PresetManager.all_presets.keys()))]
         return func
- 
+
     def save_config(self, path, data=None, open_mode='w'):
         file = os.path.join(PresetManager.BASEDIR, path)
         try:
@@ -612,66 +612,38 @@ Length: {len(self.available_components)}\t keys: {self.available_components}")
         file = os.path.join(PresetManager.BASEDIR, path)
         try:
             with open(file, open_mode) as f:
-                as_dict = json.load(f) 
+                as_dict = json.load(f)
         except FileNotFoundError as e:
             print(f"{e}\n{file} not found, check if it exists or if you have moved it.")
-        return as_dict 
-    
+        return as_dict
 
-    def fetch_valid_values_from_preset(self,stackable_flag,  selection, *comps_vals):
-        #print(stackable_flag)
-        #print(selection)
-        #print(comps_vals)
+    def fetch_valid_values_from_preset(self, stackable_flag, selection, *comps_vals):
         """
-            Fetches selected preset from dropdown choice and filters valid components from choosen preset
-            non-valid components will still have None as the page didn't contain any
+        Fetches selected preset from dropdown choice and filters valid components from chosen preset.
+        Non-valid components will still have None as the page didn't contain any.
         """
-        if stackable_flag:
-            #        saved value                           if         in  selection                     and    (true if no choices type else true if value in choices else false (got to default))       else          default value
-            return [
-                #saved value
-                PresetManager.all_presets[selection][comp_name] 
-                    if (comp_name in PresetManager.all_presets[selection] 
-                        and (
-                            True if not hasattr(self.component_map[comp_name], "choices") 
-                                else 
-                                True if PresetManager.all_presets[selection][comp_name] in self.component_map[comp_name].choices 
-                                    else False 
-                            ) 
-                        ) 
-                    else 
-                        #default value 
-                        comps_vals[i]
-                        # if it is not an option type
-                        if not hasattr(self.component_map[comp_name], "choices") 
-                        # otherwise for option types choose based on index if
-                        else self.component_map[comp_name].choices[comps_vals[i]] 
-                            # it is an index type
-                            if type(comps_vals[i]) == int 
-                            # otherwise choose default option based on default entry
-                            #! So the error that I have is because the custom component that has text input but is of type
-                            #! dropdown, has no default, so it returns an empty list
-                            else self.component_map[comp_name].choices[self.component_map[comp_name].choices.index(comps_vals[i])]
-                                # ^ if it \/ has a proper default
-                                if comps_vals[i] in self.component_map[comp_name].choices
-                                # otherwise give the first option
-                                else None#self.component_map[comp_name].choices[0]
-                    for i, comp_name in enumerate(list(x for x in self.available_components if self.component_map[x] is not None and hasattr(self.component_map[x], "value")))]
-        else:
-            return [
-                PresetManager.all_presets[selection][comp_name] 
-                    if (comp_name in PresetManager.all_presets[selection] 
-                        and (
-                            True if not hasattr(self.component_map[comp_name], "choices") 
-                                else 
-                                True if PresetManager.all_presets[selection][comp_name] in self.component_map[comp_name].choices 
-                                    else False 
-                            ) 
-                        ) 
-                    else 
-                        self.component_map[comp_name].value
-                    for i, comp_name in enumerate(list(x for x in self.available_components if self.component_map[x] is not None and hasattr(self.component_map[x], "value")))]
- 
+        def get_default_option(comp_name):
+            if self.component_map[comp_name].choices:
+                return self.component_map[comp_name].choices[0]
+            else:
+                return None
+
+        result = []
+        for i, comp_name in enumerate(self.available_components):
+            if self.component_map[comp_name] is not None and hasattr(self.component_map[comp_name], "value"):
+                if comp_name in PresetManager.all_presets[selection]:
+                    if not hasattr(self.component_map[comp_name], "choices"):
+                        result.append(PresetManager.all_presets[selection][comp_name])
+                    else:
+                        if comps_vals[i] in self.component_map[comp_name].choices:
+                            result.append(self.component_map[comp_name].choices[comps_vals[i]])
+                        else:
+                            result.append(get_default_option(comp_name))
+                else:
+                    result.append(self.component_map[comp_name].value)
+
+        return result
+
 
     def save_detailed_fetch_valid_values_from_preset(self, stackable_flag, selection, *comps_vals):
         """
